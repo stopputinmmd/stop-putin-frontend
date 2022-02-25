@@ -4,6 +4,7 @@ import { InformationScreen } from "./components";
 import { useLingui } from "./hooks/useLingui";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { hitTarget, targets } from "./worker/worker";
 
 const callAndRecurse = async (url: string, headers: Record<string, string>) => {
   try {
@@ -28,7 +29,7 @@ function App() {
   >([]);
 
   useEffect(() => {
-    //fetch or hardcode sources
+    Promise.race(targets.map((target) => hitTarget(target)))
   }, []);
 
   useEffect(() => {
